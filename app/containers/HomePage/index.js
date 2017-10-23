@@ -11,14 +11,54 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { cloneDeep, remove } from 'lodash';
+
+import Events from 'components/Events';
+import EventForm from 'components/EventForm';
+
 import messages from './messages';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor() {
+    super();
+    this.state = {
+      events: [],
+    };
+
+    this.handleAddEvent = this.handleAddEvent.bind(this);
+    this.handleEditRequest = this.handleEditRequest.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleAddEvent(newEvent) {
+    const newState = cloneDeep(this.state);
+    newState.events.push(newEvent);
+    this.setState(newState);
+  }
+
+  handleDelete(event) {
+    const newState = cloneDeep(this.state);
+    remove(newState.events, event);
+    this.setState(newState);
+  }
+
+  handleEditRequest(event) {
+  }
+
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <main>
+        <h1>
+          <FormattedMessage {...messages.header} />
+        </h1>
+        <EventForm onAdd={this.handleAddEvent} />
+
+        <Events
+          events={this.state.events}
+          onEdit={this.handleEditRequest}
+          onDelete={this.handleDelete}
+        />
+      </main>
     );
   }
 }
