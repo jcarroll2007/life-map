@@ -48,9 +48,6 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   render() {
     return (
       <main>
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
         <EventForm onAdd={this.handleAddEvent} />
 
         <Events
