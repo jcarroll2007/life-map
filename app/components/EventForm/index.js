@@ -24,7 +24,6 @@ class EventForm extends React.PureComponent { // eslint-disable-line react/prefe
       const newState = cloneDeep(this.state);
       newState[val] = event.target.value;
       this.setState(newState);
-      console.log(newState);
     };
   }
 
@@ -49,6 +48,15 @@ class EventForm extends React.PureComponent { // eslint-disable-line react/prefe
           placeholder="age"
           onChange={this.handleChange('age')}
         />
+        <input
+          placeholder="level"
+          onChange={this.handleChange('level')}
+        />
+        <select onChange={this.handleChange('type')}>
+          <option>Spiritual</option>
+          <option>Emotional</option>
+          <option>Physical</option>
+        </select>
         <input type="submit" value="ADD" />
       </form>
     );
