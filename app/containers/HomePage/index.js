@@ -10,29 +10,58 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { cloneDeep, remove } from 'lodash';
+import { cloneDeep, remove, findIndex } from 'lodash';
 
 import Events from 'components/Events';
 import EventForm from 'components/EventForm';
+import LifeMapChart from 'components/LifeMapChart';
+import { Flex, Box } from 'reflexbox';
 
-import messages from './messages';
+import events from './fixtures/events.json';
+
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor() {
     super();
     this.state = {
-      events: [],
+      events,
+      event: this.getNewEvent(),
     };
+    window.state = this;
 
     this.handleAddEvent = this.handleAddEvent.bind(this);
+    this.handleSaveEvent = this.handleSaveEvent.bind(this);
     this.handleEditRequest = this.handleEditRequest.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  getNewEvent() {
+    return {
+      age: '',
+      description: '',
+      title: '',
+      level: 0,
+      type: '',
+      id: null,
+    };
+  }
+
   handleAddEvent(newEvent) {
     const newState = cloneDeep(this.state);
+
     newState.events.push(newEvent);
+    newState.event = this.getNewEvent();
+
+    this.setState(newState);
+  }
+
+  handleSaveEvent(event) {
+    const newState = cloneDeep(this.state);
+    const eventIdx = findIndex(this.state.events, { id: event.id });
+
+    newState.events[eventIdx] = event;
+    newState.event = this.getNewEvent();
+
     this.setState(newState);
   }
 
@@ -43,12 +72,12 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   }
 
   handleEditRequest(event) {
+    this.setState({ event });
   }
 
   render() {
     return (
       <main>
-        <EventForm onAdd={this.handleAddEvent} />
 
         <Events
           events={this.state.events}
@@ -59,3 +88,21 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     );
   }
 }
+
+
+
+        // <Flex>
+
+        //   <Box w={1 / 3}>
+        //     <EventForm
+        //       event={this.state.event}
+        //       onAdd={this.handleAddEvent}
+        //       onSave={this.handleSaveEvent}
+        //     />
+        //   </Box>
+
+        //   <Box w={2 / 3}>
+        //     <LifeMapChart events={this.state.events} />
+        //   </Box>
+
+        // </Flex>
