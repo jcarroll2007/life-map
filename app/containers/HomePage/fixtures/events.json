@@ -1,10 +1,11 @@
 {
-  "spiritual": [
+  "Spiritual": [
   {
     "title":"baptized",
     "description":"I was baptized at an early age but it didn't stick.",
     "age":6,
     "level":"-5",
+    "type":"Spiritual",
     "id":"456789"
   },
   {
@@ -12,19 +13,21 @@
     "description":"My parents got divorced and I wondered why God would allow that.",
     "age":8,
     "level":"-10",
+    "type":"Spiritual",
     "id":"489789"
   }
   ],
-  "physical": [
+  "Physical": [
   {
     "title":"baptized",
     "description":"I was baptized at an early age but it didn't stick.",
     "age":6,
     "level":"0",
+    "type":"Physical",
     "id":"456789"
   }
   ],
-  "emotional": [
+  "Emotional": [
   {
     "title":"Middle School",
     "description":"Began middle school and wasn't popular.",
@@ -38,6 +41,7 @@
     "description":"My parents got divorced and I wondered why God would allow that.",
     "age":8,
     "level":"-10",
+    "type":"Emotional",
     "id":"489789"
   }
   ]

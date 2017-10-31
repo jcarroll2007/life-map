@@ -48,8 +48,9 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   handleAddEvent(newEvent) {
     const newState = cloneDeep(this.state);
+    console.log(newEvent);
 
-    newState.events.push(newEvent);
+    newState.events[newEvent.type].push(newEvent);
     newState.event = this.getNewEvent();
 
     this.setState(newState);
@@ -57,9 +58,11 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   handleSaveEvent(event) {
     const newState = cloneDeep(this.state);
-    const eventIdx = findIndex(this.state.events, { id: event.id });
+    console.log(event)
+    console.log(this.state.events)
+    const eventIdx = findIndex(this.state.events[event.type], { id: event.id });
 
-    newState.events[eventIdx] = event;
+    newState.events[event.type][eventIdx] = event;
     newState.event = this.getNewEvent();
 
     this.setState(newState);

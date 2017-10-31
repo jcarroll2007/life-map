@@ -1,7 +1,6 @@
 import { injectGlobal } from 'styled-components';
 
 import backgroundPhoto from 'background.jpg';
-console.log(backgroundPhoto)
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
@@ -36,9 +35,9 @@ injectGlobal`
 
 
 export const theme = {
-  spiritual: '#83CFEA',
-  physical: '#FF9A8A',
-  emotional: '#FFDD8A',
+  Spiritual: '#83CFEA',
+  Physical: '#FF9A8A',
+  Emotional: '#FFDD8A',
   levels: {
     10: '#37B5EF',
     9: '#3A77A3',

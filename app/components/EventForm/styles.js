@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const EventFormWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.55);
+  border-radius: 3px;
 `;
 
 const Form = styled.form`
@@ -21,12 +22,12 @@ const Form = styled.form`
     outline: none;
 
     &:focus {
-      border-bottom-color: ${(props) => props.theme.spiritual};
+      border-bottom-color: ${(props) => props.theme.Spiritual};
     }
   }
 
   input[type='submit'] {
-    background-color: ${(props) => props.theme.spiritual};
+    background-color: ${(props) => props.theme.Spiritual};
     border-radius: 4px;
     color: white;
     padding: 7px 20px;
