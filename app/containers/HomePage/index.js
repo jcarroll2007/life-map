@@ -78,6 +78,11 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   render() {
     return (
       <main>
+        <EventForm
+          event={this.state.event}
+          onAdd={this.handleAddEvent}
+          onSave={this.handleSaveEvent}
+        />
 
         <Events
           events={this.state.events}

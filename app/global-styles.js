@@ -1,14 +1,22 @@
 import { injectGlobal } from 'styled-components';
 
+import backgroundPhoto from 'background.jpg';
+console.log(backgroundPhoto)
+
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
   body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
   body {
+    background: url('${backgroundPhoto}');
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
@@ -17,9 +25,12 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
-    min-height: 100%;
+    height: 100%;
+    overflow-y: auto;
     min-width: 100%;
+  }
+  textarea, input, select, button {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 `;
 

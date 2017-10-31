@@ -62,18 +62,18 @@ class EventForm extends React.PureComponent { // eslint-disable-line react/prefe
             value={this.state.event.title}
           />
           <textarea
-            placeholder="description"
+            placeholder="Description"
             onChange={this.handleChange('description')}
             value={this.state.event.description}
           />
           <input
-            placeholder="age"
+            placeholder="Age"
             onChange={this.handleChange('age')}
             value={this.state.event.age}
             type="number"
           />
           <input
-            placeholder="level"
+            placeholder="Level"
             onChange={this.handleChange('level')}
             value={this.state.event.level}
             type="number"
