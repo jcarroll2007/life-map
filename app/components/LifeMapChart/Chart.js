@@ -3,6 +3,28 @@ import { select } from 'd3-selection';
 import 'd3-transition';
 import _ from 'lodash';
 
+function transformD(D) {
+  const newD = [];
+  _.forEach(D, (value, key) => {
+    newD.push([
+      key,
+      _.orderBy(value, 'age'),
+    ]);
+  });
+  return newD;
+}
+
+function getXDomain(DPaired) {
+  const allEvents = [];
+  _.forEach(DPaired, (pair) => {
+    Array.prototype.push.apply(allEvents, pair[1]);
+  });
+  return [
+    _.minBy(allEvents, 'age').age,
+    _.maxBy(allEvents, 'age').age,
+  ];
+}
+
 const Chart = () => {
   let height = 300;
   let width = 300;
@@ -24,17 +46,15 @@ const Chart = () => {
      * D.baseline = an array of values representing the baseline at a specific domain
      * Portfolios
      */
-    selection.each(function chartIterator(D) {
+    selection.each(function chartIterator(DOriginal) {
       const container = select(this);
-      console.log(D);
-      const DOrdered = _.orderBy(D, 'age');
-      console.log(DOrdered);
-
+      const D = transformD(DOriginal);
+      const xDomain = getXDomain(D);
       /**
        * Create svg
        */
       let svg = container.selectAll('svg')
-        .data([DOrdered]);
+        .data([D]);
 
       // ENTER
       const svgEnter = svg.enter().append('svg');
@@ -62,22 +82,19 @@ const Chart = () => {
       //  */
       const x = d3.scaleLinear()
         .range([0, innerWidth])
-        .domain([
-          d3.min(D, (d) => d.age),
-          d3.max(D, (d) => d.age),
-        ]);
+        .domain(xDomain);
       let xAxis = g.select('.x-axis');
 
       // // ENTER
       const xAxisEnter = gEnter.append('g')
         .attr('class', 'x-axis');
 
-      console.log(x.domain())
+      // console.log(x.domain())
       // UPDATE + ENTER
       xAxis = xAxis.merge(xAxisEnter)
         .attr('transform', `translate(0, ${innerHeight})`)
         .call(d3.axisBottom(x)
-          .ticks(x.domain()[1] - x.domain()[0]));
+          .ticks(xDomain[1] - xDomain[0]));
 
       /**
        * Create y scale, domain
@@ -95,17 +112,48 @@ const Chart = () => {
       yAxis = yAxis.merge(yAxisEnter)
         .call(d3.axisLeft(y));
 
-      let eventCircles = g.selectAll('.event-circle')
-        .data(DOrdered);
 
-      const eventCirclesEnter = eventCircles
-       .enter().append('circle')
-        .attr('class', 'event-circle');
+      /**
+       * Create category group
+       */
+      let categoryGroup = gEnter.selectAll('.category-group')
+        .data(D, (d) => [d[1]]);
 
-      eventCircles = eventCircles.merge(eventCirclesEnter)
-        .attr('cx', (d) => x(d.age))
-        .attr('cy', (d) => y(d.level))
-        .attr('r', 3);
+      const categoryGroupEnter = categoryGroup
+       .enter().append('g')
+        .attr('class', (d) => ['category-line', d[0]].join(' '));
+
+      categoryGroup = categoryGroup.merge(categoryGroupEnter);
+      console.log(categoryGroup);
+
+      /**
+       * Create category lines and circles
+       */
+      const line = d3.line()
+        .x((d) => x(d.age))
+        .y((d) => y(d.level));
+
+      let categoryLine = categoryGroup.selectAll('.category-line')
+        .data((d) => [d[1]]);
+
+      const categoryLineEnter = categoryLine
+       .enter().append('path')
+        .attr('class', (d) => ['category-line', d[0]].join(' '));
+
+      categoryLine = categoryLine.merge(categoryLineEnter)
+        .attr('d', line);
+
+      // let eventCircles = g.selectAll('.event-circle')
+      //   .data(D);
+
+      // const eventCirclesEnter = eventCircles
+      //  .enter().append('circle')
+      //   .attr('class', 'event-circle');
+
+      // eventCircles = eventCircles.merge(eventCirclesEnter)
+      //   .attr('cx', (d) => x(d.age))
+      //   .attr('cy', (d) => y(d.level))
+      //   .attr('r', 3);
     });
   };
 

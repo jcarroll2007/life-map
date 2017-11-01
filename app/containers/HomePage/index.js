@@ -48,7 +48,6 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   handleAddEvent(newEvent) {
     const newState = cloneDeep(this.state);
-    console.log(newEvent);
 
     newState.events[newEvent.type].push(newEvent);
     newState.event = this.getNewEvent();
@@ -58,8 +57,6 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   handleSaveEvent(event) {
     const newState = cloneDeep(this.state);
-    console.log(event)
-    console.log(this.state.events)
     const eventIdx = findIndex(this.state.events[event.type], { id: event.id });
 
     newState.events[event.type][eventIdx] = event;
@@ -81,11 +78,18 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   render() {
     return (
       <main>
-        <EventForm
-          event={this.state.event}
-          onAdd={this.handleAddEvent}
-          onSave={this.handleSaveEvent}
-        />
+        <Flex p="15px">
+          <Box w={1 / 3}>
+            <EventForm
+              event={this.state.event}
+              onAdd={this.handleAddEvent}
+              onSave={this.handleSaveEvent}
+            />
+          </Box>
+          <Box w={2 / 3}>
+            <LifeMapChart events={this.state.events} />
+          </Box>
+        </Flex>
 
         <Events
           events={this.state.events}
@@ -96,21 +100,3 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     );
   }
 }
-
-
-
-        // <Flex>
-
-        //   <Box w={1 / 3}>
-        //     <EventForm
-        //       event={this.state.event}
-        //       onAdd={this.handleAddEvent}
-        //       onSave={this.handleSaveEvent}
-        //     />
-        //   </Box>
-
-        //   <Box w={2 / 3}>
-        //     <LifeMapChart events={this.state.events} />
-        //   </Box>
-
-        // </Flex>

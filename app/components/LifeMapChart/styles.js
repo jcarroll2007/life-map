@@ -6,4 +6,16 @@ export default styled.div`
   .event-circle {
     fill: black;
   }
+
+  .category-line {
+    &.Spiritual {
+      stroke: ${(props) => props.theme.Spiritual}
+    }
+    &.Physical {
+      stroke: ${(props) => props.theme.Physical}
+    }
+    &.Emotional {
+      stroke: ${(props) => props.theme.Emotional}
+    }
+  }
 `;
